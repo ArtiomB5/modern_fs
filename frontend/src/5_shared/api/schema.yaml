@@ -1,0 +1,245 @@
+openapi: 3.0.0
+paths:
+  /account:
+    get:
+      operationId: AccountController_getAccount
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDto'
+      tags:
+        - account
+    patch:
+      operationId: AccountController_patchAccount
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchAccountDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDto'
+      tags:
+        - account
+  /auth/sign-up:
+    post:
+      operationId: AuthController_signUp
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpBodyDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - auth
+  /auth/sign-in:
+    post:
+      operationId: AuthController_signIn
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInBodyDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - auth
+  /auth/sign-out:
+    post:
+      operationId: AuthController_signOut
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - auth
+  /auth/session:
+    get:
+      operationId: AuthController_getSessionInfo
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSessionInfoDto'
+      tags:
+        - auth
+  /block-list:
+    get:
+      operationId: BlockListController_getList
+      parameters:
+        - name: q
+          required: true
+          in: query
+          schema:
+            nullable: true
+            type: string
+      responses:
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockListDto'
+  /block-list/item:
+    post:
+      operationId: BlockListController_addBlockItem
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddBlockItemDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockItemDto'
+  /block-list/item/{id}:
+    delete:
+      operationId: BlockListController_removeBloCkItem
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+info:
+  title: Modern Fullstack Documentation
+  description: The Modern FS API description
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    AccountDto:
+      type: object
+      properties:
+        id:
+          type: number
+        ownerId:
+          type: number
+        isBlockingEnabled:
+          type: boolean
+      required:
+        - id
+        - ownerId
+        - isBlockingEnabled
+    PatchAccountDto:
+      type: object
+      properties:
+        isBlockingEnabled:
+          type: boolean
+      required:
+        - isBlockingEnabled
+    SignUpBodyDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@gmail.com
+        password:
+          type: string
+          example: pass123!
+      required:
+        - email
+        - password
+    SignInBodyDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@gmail.com
+        password:
+          type: string
+          example: pass123!
+      required:
+        - email
+        - password
+    GetSessionInfoDto:
+      type: object
+      properties:
+        id:
+          type: number
+        email:
+          type: string
+        iat:
+          type: number
+        exp:
+          type: number
+      required:
+        - id
+        - email
+        - iat
+        - exp
+    BlockItemDto:
+      type: object
+      properties:
+        id:
+          type: number
+        blockType:
+          type: string
+        data:
+          type: string
+        blockListId:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - blockType
+        - data
+        - blockListId
+        - createdAt
+    BlockListDto:
+      type: object
+      properties:
+        id:
+          type: number
+        ownerId:
+          type: number
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockItemDto'
+      required:
+        - id
+        - ownerId
+        - items
+    AddBlockItemDto:
+      type: object
+      properties:
+        blockType:
+          type: string
+        data:
+          type: string
+      required:
+        - blockType
+        - data
