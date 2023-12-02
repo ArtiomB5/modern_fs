@@ -4,9 +4,12 @@ import { FC } from "react"
 
 type LinkPropsType = Parameters<typeof Link>[0];
 
-interface IUILinkProps extends LinkPropsType {}
+interface IUILinkProps extends LinkPropsType {
+    disabled?: boolean;
+}
 
 export const UILink: FC<IUILinkProps> = (props) => {
+    const { disabled } = props;
     const {
         className,
         ...linkProps

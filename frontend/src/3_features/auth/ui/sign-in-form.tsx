@@ -1,14 +1,14 @@
 import { UIButton, UIButtonVariants, UILink, UITextField } from "@/5_shared/ui"
-import { useSignUpForm } from "../model/use-sign-up-form";
+import { useSignInForm } from "../model/use-sign-in-form";
 import { Routes } from "@/5_shared/constants";
 
-export const SignUpForm = () => {
+export const SignInForm = () => {
     const {
         register,
         handleSubmit,
         isLoading,
         errorMessage
-    } = useSignUpForm();
+    } = useSignInForm();
 
     return <form
         className={'flex flex-col gap-5'}
@@ -26,14 +26,15 @@ export const SignUpForm = () => {
             variant={UIButtonVariants.Primary}
             disabled={isLoading}
         >
-            Sign Up
-        </UIButton>
-        <UILink href={Routes.SignIn} className={'text-center'}>
             Sign In
-        </UILink>
-        {errorMessage && <div
-            className={'text-rose-500 text-center'}
+        </UIButton>
+        <UILink
+            href={Routes.SignUp}
+            className={'text-center'}
         >
+            Sign Up
+        </UILink>
+        {errorMessage && <div className={'text-rose-500 text-center'}>
             {errorMessage}
         </div>}
     </form>

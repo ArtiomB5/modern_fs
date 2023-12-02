@@ -1,12 +1,13 @@
 import type { AppProps } from 'next/app'
 import { AppProviders } from './app-providers'
-import { CommonPageLayout } from '@/5_shared/ui'
+import { AppLayout } from './app-layout'
 
 export function App({ Component, pageProps }: AppProps) {
-  return <CommonPageLayout>
+  return (
     <AppProviders>
-      <Component {...pageProps} />
-    </AppProviders>
-  </CommonPageLayout>
-
+      <AppLayout>
+        <Component {...pageProps} />
+      </AppLayout>
+    </AppProviders >
+  )
 }
